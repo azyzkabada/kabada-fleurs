@@ -65,6 +65,7 @@ coverage/
 # IDE / Editor Specific
 # -------------------------------
 .vscode/
+/.vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
@@ -94,7 +95,7 @@ Icon?
 *.rej
 *.log
 *.lock
-*.backup
+*.backup 
 *.~undo-tree
 *.undo
 *.~undo

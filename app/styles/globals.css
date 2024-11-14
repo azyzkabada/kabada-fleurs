@@ -1,8 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
+    --font-sans: "  Titillium Web", sans-serif;
+    --font-special-sans: "Krona One", sans-serif;
     --background: 155 36% 100%;
     --foreground: 155 71% 1%;
     --muted: 155 5% 95%;
@@ -56,4 +59,8 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+.font-special {
+  font-family: var(--font-special-sans);
 }

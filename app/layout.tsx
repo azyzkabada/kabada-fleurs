@@ -2,7 +2,7 @@ import { Metadata, type Viewport } from "next"
 import { TailwindIndicator } from "@/src/components/tailwind-indicator"
 import { ThemeProvider } from "@/src/components/theme-provider"
 import { cn } from "@/src/lib/cn-utils"
-import { fontSans } from "@/src/lib/fonts"
+import { fontSans, fontSpecial } from "@/src/lib/fonts"
 
 import { siteConfig } from "@/config/site"
 
@@ -44,11 +44,11 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            `min-h-screen bg-background ${fontSans.variable}  ${fontSpecial.variable} font-sans antialiased`,
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light">
             {children}
             <TailwindIndicator />
           </ThemeProvider>

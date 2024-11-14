@@ -10,12 +10,12 @@ interface MainNavProps {
 
 export function MainNav({ items }: MainNavProps) {
   return (
-    <div className="flex gap-6 md:gap-10">
+    <div className="ml-8 flex gap-6 md:ml-20 md:gap-10">
       <Link
         href="/"
         className="flex items-center space-x-2 text-foreground dark:text-white"
       >
-        <Icons.logo className="w-10 h-10 text-foreground dark:text-white" />
+        <Icons.logo className="size-10 text-foreground dark:text-white" />
         <span className="inline-block text-lg font-semibold ">
           {siteConfig.name}
         </span>

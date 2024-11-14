@@ -5,14 +5,14 @@ import React from 'react'
 
 export const Header: React.FC = () => {
     return (
-        <header className="fixed top-0 w-full z-50  bg-black shadow-md">
-            <div className="flex items-center justify-between px-4 py-4 text-white">
+        <header className="fixed top-0 z-50 w-full  bg-black shadow-md">
+            <div className="flex items-center justify-between p-4 text-white">
                 {/* Left Section: Logo and Sidebar */}
                 <div className="flex items-center gap-4">
                     <SidebarTrigger
                         variant="ghost"
                         size="icon"
-                        className="text-white p-2 size-9"
+                        className="size-9 p-2 text-white"
                     />
                     <a
                         href="/"
@@ -31,15 +31,15 @@ export const Header: React.FC = () => {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="flex md:hidden p-2 text-white"
+                            className="flex p-2 text-white md:hidden"
                         >
-                            <Search className="h-6 w-6" />
+                            <Search className="size-6" />
                         </Button>
 
                         {/* Large screen view */}
-                        <div className="hidden md:flex flex-col items-center text-white text-sm font-semibold">
+                        <div className="hidden flex-col items-center text-sm font-semibold text-white md:flex">
                             <span>RECHERCHER</span>
-                            <div className="h-[1px] w-full bg-white mt-1"></div>
+                            <div className="mt-1 h-px w-full bg-white"></div>
                         </div>
                     </div>
                     <Button
@@ -47,14 +47,14 @@ export const Header: React.FC = () => {
                         size="icon"
                         className="p-2 "
                     >
-                        <User2 className="h-6 w-6" />
+                        <User2 className="size-6" />
                     </Button>
                     <Button
                         variant="ghost"
                         size="icon"
                         className="relative p-2 "
                     >
-                        <ShoppingBag className="h-6 w-6" />
+                        <ShoppingBag className="size-6" />
                         <span className="sr-only">Panier (0)</span>
                     </Button>
                 </div>

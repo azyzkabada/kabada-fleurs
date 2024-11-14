@@ -9,6 +9,17 @@ module.exports = {
     "components/**/*.{ts,tsx}",
   ],
   theme: {
+    aspectRatio: {
+      // defaults to {}
+      none: 0,
+      square: [1, 1], // or 1 / 1, or simply 1
+      "16/9": [16, 9], // or 16 / 9
+      "4/3": [4, 3], // or 4 / 3
+      "21/9": [21, 9], // or 21 / 9
+    },
+    variants: {
+      aspectRatio: ["responsive"], // defaults to ['responsive']
+    },
     container: {
       center: "true",
       padding: "2rem",
@@ -76,6 +87,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        special: ["var(--font-special-sans)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
@@ -101,5 +113,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-aspect-ratio"),
+  ],
 }

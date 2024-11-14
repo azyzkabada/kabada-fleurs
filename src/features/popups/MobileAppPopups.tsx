@@ -29,7 +29,7 @@ export const AppPopup: React.FC<AppPopupProps> = ({ open, setOpen }) => {
                     <img
                         src="/placeholder.svg?height=200&width=200"
                         alt="QR Code"
-                        className="h-32 w-32"
+                        className="size-32"
                     />
                     <p className="text-center text-sm">
                         TÉLÉCHARGEZ-LA DÈS MAINTENANT !

@@ -41,7 +41,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
           <Button disabled={isLoading}>
             {isLoading && (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             Se connecter avec un email
           </Button>
@@ -52,16 +52,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="px-2 bg-background text-muted-foreground">
+          <span className="bg-background px-2 text-muted-foreground">
             Ou continuer avec
           </span>
         </div>
       </div>
       <Button variant="outline" type="button" disabled={isLoading}>
         {isLoading ? (
-          <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+          <Icons.spinner className="mr-2 size-4 animate-spin" />
         ) : (
-          <Icons.gitHub className="w-4 h-4 mr-2" />
+          <Icons.gitHub className="mr-2 size-4" />
         )}{" "}
         GitHub
       </Button>

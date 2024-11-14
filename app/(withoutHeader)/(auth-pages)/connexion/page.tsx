@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function AuthenticationPage() {
   return (
     <>
-      <div className="container relative flex-col items-center justify-center hidden h-screen md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
           href="/"
           className={cn(
@@ -25,7 +25,7 @@ export default function AuthenticationPage() {
         >
           Retour a l'acceuil
         </Link>
-        <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900">
             <Image
               className=""
@@ -35,10 +35,10 @@ export default function AuthenticationPage() {
               objectFit="cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary n to-transparent to-40%"></div>
+            <div className="n absolute inset-0 bg-gradient-to-t from-primary to-transparent to-40%"></div>
           </div>
           <div className="relative z-20 flex items-center text-lg font-medium">
-            <Icons.logo className="h-8 mr-2 w-9 font-sm" />
+            <Icons.logo className="font-sm mr-2 h-8 w-9" />
             Kabada - Atelier Vegetale
           </div>
           <div className="relative z-20 mt-auto">
@@ -64,7 +64,7 @@ export default function AuthenticationPage() {
               </p>
             </div>
             <UserAuthForm />
-            <p className="px-8 text-sm text-center text-muted-foreground">
+            <p className="px-8 text-center text-sm text-muted-foreground">
               En cliquant sur continuer, vous acceptez nos{" "}
               <Link
                 href="/terms"
