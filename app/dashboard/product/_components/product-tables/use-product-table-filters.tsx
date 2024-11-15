@@ -1,47 +1,47 @@
-'use client';
+"use client"
 
-import { searchParams } from '@/lib/searchparams';
-import { useQueryState } from 'nuqs';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react"
+import { searchParams } from "@/src/lib/searchparams"
+import { useQueryState } from "nuqs"
 
 export const CATEGORY_OPTIONS = [
-  { value: 'Electronics', label: 'Electronics' },
-  { value: 'Furniture', label: 'Furniture' },
-  { value: 'Clothing', label: 'Clothing' },
-  { value: 'Toys', label: 'Toys' },
-  { value: 'Groceries', label: 'Groceries' },
-  { value: 'Books', label: 'Books' },
-  { value: 'Jewelry', label: 'Jewelry' },
-  { value: 'Beauty Products', label: 'Beauty Products' }
-];
+  { value: "Electronics", label: "Electronics" },
+  { value: "Furniture", label: "Furniture" },
+  { value: "Clothing", label: "Clothing" },
+  { value: "Toys", label: "Toys" },
+  { value: "Groceries", label: "Groceries" },
+  { value: "Books", label: "Books" },
+  { value: "Jewelry", label: "Jewelry" },
+  { value: "Beauty Products", label: "Beauty Products" },
+]
 export function useProductTableFilters() {
   const [searchQuery, setSearchQuery] = useQueryState(
-    'q',
+    "q",
     searchParams.q
       .withOptions({ shallow: false, throttleMs: 1000 })
-      .withDefault('')
-  );
+      .withDefault("")
+  )
 
   const [categoriesFilter, setCategoriesFilter] = useQueryState(
-    'categories',
-    searchParams.categories.withOptions({ shallow: false }).withDefault('')
-  );
+    "categories",
+    searchParams.categories.withOptions({ shallow: false }).withDefault("")
+  )
 
   const [page, setPage] = useQueryState(
-    'page',
+    "page",
     searchParams.page.withDefault(1)
-  );
+  )
 
   const resetFilters = useCallback(() => {
-    setSearchQuery(null);
-    setCategoriesFilter(null);
+    setSearchQuery(null)
+    setCategoriesFilter(null)
 
-    setPage(1);
-  }, [setSearchQuery, setCategoriesFilter, setPage]);
+    setPage(1)
+  }, [setSearchQuery, setCategoriesFilter, setPage])
 
   const isAnyFilterActive = useMemo(() => {
-    return !!searchQuery || !!categoriesFilter;
-  }, [searchQuery, categoriesFilter]);
+    return !!searchQuery || !!categoriesFilter
+  }, [searchQuery, categoriesFilter])
 
   return {
     searchQuery,
@@ -51,6 +51,6 @@ export function useProductTableFilters() {
     resetFilters,
     isAnyFilterActive,
     categoriesFilter,
-    setCategoriesFilter
-  };
+    setCategoriesFilter,
+  }
 }

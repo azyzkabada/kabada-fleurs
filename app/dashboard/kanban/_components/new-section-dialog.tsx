@@ -1,5 +1,6 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client"
+
+import { Button } from "@/src/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -7,25 +8,24 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-
-import { useTaskStore } from '@/lib/store';
+  DialogTrigger,
+} from "@/src/components/ui/dialog"
+import { Input } from "@/src/components/ui/input"
+import { useTaskStore } from "@/src/lib/store"
 
 export default function NewSectionDialog() {
-  const addCol = useTaskStore((state) => state.addCol);
+  const addCol = useTaskStore((state) => state.addCol)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const { title } = Object.fromEntries(formData);
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const { title } = Object.fromEntries(formData)
 
-    if (typeof title !== 'string') return;
-    addCol(title);
-  };
+    if (typeof title !== "string") return
+    addCol(title)
+  }
 
   return (
     <Dialog>
@@ -46,7 +46,7 @@ export default function NewSectionDialog() {
           className="grid gap-4 py-4"
           onSubmit={handleSubmit}
         >
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid items-center grid-cols-4 gap-4">
             <Input
               id="title"
               name="title"
@@ -64,5 +64,5 @@ export default function NewSectionDialog() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

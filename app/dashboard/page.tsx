@@ -1,12 +1,13 @@
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation"
+import { auth } from "@/auth"
 
 export default async function Dashboard() {
-  const session = await auth();
+  const session = await auth()
+  // const session = { user: 92879287298 }
 
   if (!session?.user) {
-    return redirect('/');
+    return redirect("/")
   } else {
-    redirect('/dashboard/overview');
+    redirect("/dashboard/overview")
   }
 }

@@ -1,5 +1,6 @@
-import PageContainer from '@/components/layout/page-container';
-import ProfileCreateForm from './profile-create-form';
+import PageContainer from "@/src/components/layout/page-container"
+
+import ProfileCreateForm from "./profile-create-form"
 
 export default function ProfileViewPage() {
   return (
@@ -8,5 +9,5 @@ export default function ProfileViewPage() {
         <ProfileCreateForm categories={[]} initialData={null} />
       </div>
     </PageContainer>
-  );
+  )
 }

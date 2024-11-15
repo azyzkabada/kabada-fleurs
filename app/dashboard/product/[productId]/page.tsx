@@ -1,13 +1,14 @@
-import FormCardSkeleton from '@/components/form-card-skeleton';
-import PageContainer from '@/components/layout/page-container';
-import { Suspense } from 'react';
-import ProductViewPage from '../_components/product-view-page';
+import { Suspense } from "react"
+import FormCardSkeleton from "@/src/components/form-card-skeleton"
+import PageContainer from "@/src/components/layout/page-container"
+
+import ProductViewPage from "../_components/product-view-page"
 
 export const metadata = {
-  title: 'Dashboard : Product View'
-};
+  title: "Dashboard : Product View",
+}
 
-type PageProps = { params: { productId: string } };
+type PageProps = { params: { productId: string } }
 
 export default function Page({ params }: PageProps) {
   return (
@@ -18,5 +19,5 @@ export default function Page({ params }: PageProps) {
         </Suspense>
       </div>
     </PageContainer>
-  );
+  )
 }

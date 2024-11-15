@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
 
 export function RecentSales() {
   return (
@@ -17,7 +17,7 @@ export function RecentSales() {
         <div className="ml-auto font-medium">+$1,999.00</div>
       </div>
       <div className="flex items-center">
-        <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
+        <Avatar className="flex items-center justify-center space-y-0 border h-9 w-9">
           <AvatarImage src="/avatars/02.png" alt="Avatar" />
           <AvatarFallback>JL</AvatarFallback>
         </Avatar>
@@ -63,5 +63,5 @@ export function RecentSales() {
         <div className="ml-auto font-medium">+$39.00</div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,8 +1,12 @@
 import { Metadata, type Viewport } from "next"
+import { auth } from "@/auth"
+import Providers from "@/src/components/layout/providers"
 import { TailwindIndicator } from "@/src/components/tailwind-indicator"
 import { ThemeProvider } from "@/src/components/theme-provider"
 import { cn } from "@/src/lib/cn-utils"
 import { fontSans, fontSpecial } from "@/src/lib/fonts"
+import NextTopLoader from "nextjs-toploader"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { siteConfig } from "@/config/site"
 
@@ -34,7 +38,11 @@ interface RootLayoutProps {
   params: { showHeader?: boolean }
 }
 
-export default function RootLayout({ children, params }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootLayoutProps) {
+  const session = await auth()
   return (
     <>
       <html
@@ -48,10 +56,27 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="light">
-            {children}
-            <TailwindIndicator />
-          </ThemeProvider>
+          {" "}
+          <NextTopLoader
+            showSpinner={true}
+            color="#1f7551"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={2}
+            crawl={true}
+            easing="ease"
+            speed={200}
+            template='<div class="bar" role="bar"><div class="peg"></div></div>
+            <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+            zIndex={1600}
+            showAtBottom={false}
+          />
+          <Providers session={session}>
+            <ThemeProvider attribute="class" defaultTheme="light">
+              <NuqsAdapter> {children}</NuqsAdapter>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </Providers>
         </body>
       </html>
     </>

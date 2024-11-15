@@ -1,22 +1,23 @@
-'use client';
+"use client"
 
-import { DataTable } from '@/components/ui/table/data-table';
-import { DataTableFilterBox } from '@/components/ui/table/data-table-filter-box';
-import { DataTableResetFilter } from '@/components/ui/table/data-table-reset-filter';
-import { DataTableSearch } from '@/components/ui/table/data-table-search';
-import { Employee } from '@/constants/data';
-import { columns } from '../employee-tables/columns';
+import { DataTable } from "@/src/components/ui/table/data-table"
+import { DataTableFilterBox } from "@/src/components/ui/table/data-table-filter-box"
+import { DataTableResetFilter } from "@/src/components/ui/table/data-table-reset-filter"
+import { DataTableSearch } from "@/src/components/ui/table/data-table-search"
+import { Employee } from "@/src/constants/data"
+
+import { columns } from "../employee-tables/columns"
 import {
   GENDER_OPTIONS,
-  useEmployeeTableFilters
-} from './use-employee-table-filters';
+  useEmployeeTableFilters,
+} from "./use-employee-table-filters"
 
 export default function EmployeeTable({
   data,
-  totalData
+  totalData,
 }: {
-  data: Employee[];
-  totalData: number;
+  data: Employee[]
+  totalData: number
 }) {
   const {
     genderFilter,
@@ -25,8 +26,8 @@ export default function EmployeeTable({
     resetFilters,
     searchQuery,
     setPage,
-    setSearchQuery
-  } = useEmployeeTableFilters();
+    setSearchQuery,
+  } = useEmployeeTableFilters()
 
   return (
     <div className="space-y-4">
@@ -51,5 +52,5 @@ export default function EmployeeTable({
       </div>
       <DataTable columns={columns} data={data} totalItems={totalData} />
     </div>
-  );
+  )
 }

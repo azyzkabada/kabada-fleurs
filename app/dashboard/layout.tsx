@@ -1,23 +1,24 @@
-import KBar from '@/components/kbar';
-import AppSidebar from '@/components/layout/app-sidebar';
-import Header from '@/components/layout/header';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
+import type { Metadata } from "next"
+import { cookies } from "next/headers"
+import KBar from "@/src/components/kbar"
+import AppSidebar from "@/src/components/layout/app-sidebar"
+import Header from "@/src/components/layout/header"
+import { SidebarInset, SidebarProvider } from "@/src/components/ui/sidebar"
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn Dashboard Starter',
-  description: 'Basic dashboard with Next.js and Shadcn'
-};
+  title: "Next Shadcn Dashboard Starter",
+  description: "Basic dashboard with Next.js and Shadcn",
+}
 
-export default function DashboardLayout({
-  children
+export default async function DashboardLayout({
+  children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   // Persisting the sidebar state in the cookie.
-  const cookieStore = cookies();
-  const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
+  const cookieStore = cookies()
+  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
+  console.log(AppSidebar)
   return (
     <KBar>
       <SidebarProvider defaultOpen={defaultOpen}>
@@ -30,5 +31,5 @@ export default function DashboardLayout({
         </SidebarInset>
       </SidebarProvider>
     </KBar>
-  );
+  )
 }

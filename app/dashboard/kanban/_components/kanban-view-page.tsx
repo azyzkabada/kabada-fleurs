@@ -1,7 +1,8 @@
-import PageContainer from '@/components/layout/page-container';
-import { Heading } from '@/components/ui/heading';
-import { KanbanBoard } from './kanban-board';
-import NewTaskDialog from './new-task-dialog';
+import PageContainer from "@/src/components/layout/page-container"
+import { Heading } from "@/src/components/ui/heading"
+
+import { KanbanBoard } from "./kanban-board"
+import NewTaskDialog from "./new-task-dialog"
 
 export default function KanbanViewPage() {
   return (
@@ -14,5 +15,5 @@ export default function KanbanViewPage() {
         <KanbanBoard />
       </div>
     </PageContainer>
-  );
+  )
 }
