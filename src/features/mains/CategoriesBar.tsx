@@ -88,7 +88,7 @@ export default function CategoriesBar() {
                                 <div className="w-full font-medium leading-none text-md">
                                   {item.name}
                                 </div>
-                                <Separator className="w-full mt-2 text-primary" />
+                                <Separator className="w-full mt-3 opacity-100 text-accent" />
                               </Link>
                             </NavigationMenuLink>
                           </li>

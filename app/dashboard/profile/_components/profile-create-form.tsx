@@ -206,18 +206,18 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
           {steps.map((step, index) => (
             <li key={step.name} className="md:flex-1">
               {currentStep > index ? (
-                <div className="flex flex-col w-full py-2 pl-4 transition-colors border-l-4 group border-sky-600 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                  <span className="text-sm font-medium transition-colors text-sky-600 ">
+                <div className="flex flex-col w-full py-2 pl-4 transition-colors border-l-4 group border-primary md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
+                  <span className="text-sm font-medium transition-colors text-primary ">
                     {step.id}
                   </span>
                   <span className="text-sm font-medium">{step.name}</span>
                 </div>
               ) : currentStep === index ? (
                 <div
-                  className="flex flex-col w-full py-2 pl-4 border-l-4 border-sky-600 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
+                  className="flex flex-col w-full py-2 pl-4 border-l-4 border-primary md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
                   aria-current="step"
                 >
-                  <span className="text-sm font-medium text-sky-600">
+                  <span className="text-sm font-medium text-primary ">
                     {step.id}
                   </span>
                   <span className="text-sm font-medium">{step.name}</span>
@@ -421,7 +421,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                       <AccordionContent>
                         <div
                           className={cn(
-                            "relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3"
+                            "relative mb-4 gap-8 border p-4 md:grid md:grid-cols-3"
                           )}
                         >
                           <FormField
@@ -604,11 +604,12 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
       {/* Navigation */}
       <div className="pt-5 mt-8">
         <div className="flex justify-between">
-          <button
+          <Button
             type="button"
             onClick={prev}
+            variant={"outline"}
             disabled={currentStep === 0}
-            className="px-2 py-1 text-sm font-semibold bg-white rounded shadow-sm text-sky-900 ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="px-2 py-1 text-sm font-semibold ring-inset hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -624,12 +625,13 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                 d="M15.75 19.5L8.25 12l7.5-7.5"
               />
             </svg>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant={"outline"}
             onClick={next}
             disabled={currentStep === steps.length - 1}
-            className="px-2 py-1 text-sm font-semibold bg-white rounded shadow-sm text-sky-900 ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="px-2 py-1 text-sm font-semibold ring-inset disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -645,7 +647,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                 d="M8.25 4.5l7.5 7.5-7.5 7.5"
               />
             </svg>
-          </button>
+          </Button>
         </div>
       </div>
     </>
