@@ -24,7 +24,7 @@ const products = [
     color: "Black",
   },
   {
-    id: 1,
+    id: 12,
     name: "Basic Tee",
     href: "#",
     imageSrc:
@@ -34,7 +34,7 @@ const products = [
     color: "Black",
   },
   {
-    id: 1,
+    id: 232321,
     name: "Basic Tee",
     href: "#",
     imageSrc:
@@ -44,7 +44,7 @@ const products = [
     color: "Black",
   },
   {
-    id: 1,
+    id: 123423543,
     name: "Basic Tee",
     href: "#",
     imageSrc:

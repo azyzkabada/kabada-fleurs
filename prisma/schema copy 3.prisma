@@ -1,0 +1,224 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Nouveau
+  password      String?   // Mot de passe (haché)
+  firstName     String?   // Prénom
+  lastName      String?   // Nom de famille
+  phone         String?   // Numéro de téléphone (optionnel)
+  dateOfBirth   DateTime? // Date de naissance (optionnel)
+  walletBalance Float     @default(0) // Solde du portefeuille
+  points        Int       @default(0) // Points de fidélité
+
+  // Relations supplémentaires
+  orders        Order[]
+  transactions  Transaction[]
+  reviews       Review[]
+  addresses     Address[]
+  pages         Page[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  street     String
+  city       String
+  postalCode String
+  country    String
+  isPrimary  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id            String         @id @default(uuid())
+  name          String
+  description   String?
+  price         Float
+  imageUrl      String
+  stock         Int            @default(0)
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id])
+  orderProducts OrderProduct[]
+  reviews       Review[]
+  averageRating Float?         @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Order {
+  id         String         @id @default(uuid())
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  products   OrderProduct[]
+  totalPrice Float
+  status     OrderStatus    @default(PENDING)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model OrderProduct {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model Transaction {
+  id        String          @id @default(uuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  amount    Float
+  type      TransactionType
+  createdAt DateTime        @default(now())
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Page {
+  id           String       @id @default(uuid())
+  name         String
+  slug         String       @unique
+  status       String       @default("draft")
+  locale       String
+  parentId     String?
+  parent       Page?        @relation("PageHierarchy", fields: [parentId], references: [id])
+  children     Page[]       @relation("PageHierarchy")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  configs      PageConfig[]
+  authorId     String?
+  author       User?        @relation(fields: [authorId], references: [id])
+
+  @@index([locale, slug], name: "idx_locale_slug")
+}
+
+model PageConfig {
+  id           String       @id @default(uuid())
+  pageId       String
+  parentId     String?
+  group        String?
+  key          String
+  value        Json
+  type         String
+  description  String?
+  isRequired   Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  page         Page         @relation(fields: [pageId], references: [id])
+  parent       PageConfig?  @relation("ConfigHierarchy", fields: [parentId], references: [id])
+  children     PageConfig[] @relation("ConfigHierarchy")
+
+  @@index([pageId, key], name: "idx_page_key")
+  @@unique([pageId, key, parentId])
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum TransactionType {
+  PAYMENT
+  WALLET
+}

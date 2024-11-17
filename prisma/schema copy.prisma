@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(uuid()) // Identifiant unique
+  email         String    @unique // Adresse e-mail unique
+  password      String?   // Mot de passe (haché)
+  firstName     String?   // Prénom
+  lastName      String?   // Nom de famille
+  phone         String?   // Numéro de téléphone (optionnel)
+  dateOfBirth   DateTime? // Date de naissance (optionnel)
+  createdAt     DateTime  @default(now()) // Date de création du compte
+  updatedAt     DateTime  @updatedAt // Dernière mise à jour
+  walletBalance Float     @default(0) // Solde du portefeuille
+  points        Int       @default(0) // Points de fidélité
+
+  // Relations
+  orders        Order[]
+  transactions  Transaction[]
+  reviews       Review[]
+  addresses     Address[]
+  pages         Page[]
+
+  // Champs dérivés
+  fullName String? @default("") // Champ virtuel (nom complet) pour les affichages (non persistant)
+}
+
+model Address {
+  id         String   @id @default(uuid()) // Identifiant unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id]) // Relation avec User
+  street     String // Rue et numéro
+  city       String // Ville
+  postalCode String // Code postal
+  country    String // Pays
+  isPrimary  Boolean  @default(false) // Indique si c'est l'adresse principale
+  createdAt  DateTime @default(now()) // Date d'ajout de l'adresse
+  updatedAt  DateTime @updatedAt // Dernière mise à jour
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id            String         @id @default(uuid())
+  name          String
+  description   String?
+  price         Float
+  imageUrl      String
+  stock         Int            @default(0)
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id])
+  orderProducts OrderProduct[]
+  reviews       Review[]
+  averageRating Float?         @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Order {
+  id         String         @id @default(uuid())
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  products   OrderProduct[]
+  totalPrice Float
+  status     OrderStatus    @default(PENDING)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model OrderProduct {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model Transaction {
+  id        String          @id @default(uuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  amount    Float
+  type      TransactionType
+  createdAt DateTime        @default(now())
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  rating    Int // Note entre 1 et 5
+  comment   String? // Commentaire optionnel
+  createdAt DateTime @default(now())
+}
+
+model Page {
+  id           String       @id @default(uuid())
+  name         String       // Nom de la page (ex: "home", "about", "contact")
+  slug         String       @unique // URL de la page (ex: "/home")
+  status       String       @default("draft") // "draft", "published", "archived"
+  locale       String       // Langue de la page (ex: "en", "fr")
+  parentId     String?      // Pour une hiérarchie de pages
+  parent       Page?        @relation("PageHierarchy", fields: [parentId], references: [id])
+  children     Page[]       @relation("PageHierarchy")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  configs      PageConfig[] // Liste des configurations de cette page
+  authorId     String?      // Auteur de la page
+  author       User?        @relation(fields: [authorId], references: [id])
+
+  @@index([locale, slug], name: "idx_locale_slug")
+}
+
+model PageConfig {
+  id           String       @id @default(uuid())
+  pageId       String       // Référence vers une page
+  parentId     String?      // Référence vers une configuration parente
+  group        String?      // Groupe ou catégorie (ex: "SEO", "Design", "Tracking")
+  key          String       // Clé de configuration (ex: "header", "color", "component")
+  value        Json         // Valeur de la configuration (texte, couleur, JSON)
+  type         String       // Type de donnée (ex: "string", "number", "boolean", "json")
+  description  String?      // Description pour expliquer l'utilisation
+  isRequired   Boolean      @default(false) // Configuration obligatoire ou non
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  page         Page         @relation(fields: [pageId], references: [id])
+  parent       PageConfig?  @relation("ConfigHierarchy", fields: [parentId], references: [id])
+  children     PageConfig[] @relation("ConfigHierarchy")
+
+  @@index([pageId, key], name: "idx_page_key")
+  @@unique([pageId, key, parentId])
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum TransactionType {
+  PAYMENT
+  WALLET
+}

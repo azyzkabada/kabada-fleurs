@@ -1,6 +1,4 @@
 import { Metadata, type Viewport } from "next"
-import { auth } from "@/auth"
-import Providers from "@/src/components/layout/providers"
 import { TailwindIndicator } from "@/src/components/tailwind-indicator"
 import { ThemeProvider } from "@/src/components/theme-provider"
 import { cn } from "@/src/lib/cn-utils"
@@ -35,20 +33,24 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  modal: React.ReactNode
+  searchParams: Record<string, string> | null | undefined
   params: { showHeader?: boolean }
 }
 
 export default async function RootLayout({
   children,
+  searchParams,
   params,
+  modal,
 }: RootLayoutProps) {
-  const session = await auth()
+  const show = searchParams?.show
+  console.log(searchParams, "search")
+  console.log(params, "para")
+  // console.log(session)
   return (
     <>
-      <html
-        lang="fr"
-        //  suppressHydrationWarning
-      >
+      <html lang="fr" suppressHydrationWarning>
         <head />
         <body
           className={cn(
@@ -56,13 +58,12 @@ export default async function RootLayout({
             fontSans.variable
           )}
         >
-          {" "}
           <NextTopLoader
-            showSpinner={true}
+            showSpinner={false}
             color="#1f7551"
             initialPosition={0.08}
             crawlSpeed={200}
-            height={2}
+            height={3}
             crawl={true}
             easing="ease"
             speed={200}
@@ -71,12 +72,12 @@ export default async function RootLayout({
             zIndex={1600}
             showAtBottom={false}
           />
-          <Providers session={session}>
-            <ThemeProvider attribute="class" defaultTheme="light">
-              <NuqsAdapter> {children}</NuqsAdapter>
-              <TailwindIndicator />
-            </ThemeProvider>
-          </Providers>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            {/* {modal} */}
+            <NuqsAdapter> {children}</NuqsAdapter>
+
+            <TailwindIndicator />
+          </ThemeProvider>
         </body>
       </html>
     </>
