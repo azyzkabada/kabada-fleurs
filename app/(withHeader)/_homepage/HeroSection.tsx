@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site"
 
 export default function HeroSection() {
   return (
-    <section className="px-4 py-10 ">
+    <section className="container px-4 py-10 ">
       <div className="flex flex-col-reverse items-center gap-8 md:flex-row md:justify-between">
         <div className="flex flex-col items-center text-center md:w-1/2 md:items-start md:text-left">
           <h1 className="text-xl font-extrabold leading-tight tracking-tighter font-special md:text-3xl lg:text-4xl">

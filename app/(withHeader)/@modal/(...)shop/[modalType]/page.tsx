@@ -1,17 +1,17 @@
 // Importation des composants modaux
-import LogoutModal from "../../../modals/[modalType]/_modals/Logout"
+import CartModal from "@/app/(withHeader)/shop/[modalType]/_modals/Cart"
+
 import { Modal } from "../../Modal"
 
 // Définition du type pour les paramètres
 type Params = {
-  modalType: "logout" | "login" | "register"
+  modalType: "cart"
 }
 
 // Map des modaux avec type explicite
 const modalComponents: Record<Params["modalType"], React.ReactNode> = {
-  logout: <LogoutModal />,
-  login: null, // Placeholder pour LoginModal (à remplacer par le vrai composant)
-  register: null, // Placeholder pour RegisterModal (à remplacer par le vrai composant)
+  cart: <CartModal />,
+  // login: null, // Placeholder pour LoginModal (à remplacer par le vrai composant)
 }
 
 // Fonction principale avec rendu conditionnel

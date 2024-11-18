@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Social } from "@/src/components/auth/social"
 import { Button } from "@/src/components/ui/button"
 import {
   Card,
@@ -10,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card"
-import { Separator } from "@/src/components/ui/separator"
 
 type CardWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
   headerTitle: string
@@ -51,21 +49,14 @@ export const CardWrapper = (props: CardWrapperProps) => {
         <CardDescription>{headerDescription}</CardDescription>
       </CardHeader>
       {children ? <CardContent>{children}</CardContent> : null}
-      {showSocial ? (
-        <>
-          <CardFooter className="gap-x-2">
-            <Separator className="shrink" />
-            <p className="text-sm text-center basis-full">Or connect with</p>
-            <Separator className="shrink" />
-          </CardFooter>
-          <CardFooter>
-            <Social />
-          </CardFooter>
-        </>
-      ) : null}
-      <Separator />
+
       <CardFooter className="py-3">
-        <Button variant="link" className="w-full font-normal" size="sm" asChild>
+        <Button
+          variant="link"
+          className="w-full text-sm font-bold"
+          size="sm"
+          asChild
+        >
           <Link href={backButtonHref}>{backButtonLabel}</Link>
         </Button>
       </CardFooter>

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
-import { CardWrapper } from "@/src/components/auth/card-wrapper"
 import type { Response } from "@/types"
+
+import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
 
 type NewVerificationFormProps = {
   data: Response

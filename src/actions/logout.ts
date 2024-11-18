@@ -7,8 +7,8 @@ import { response } from "@/src/lib/utils"
 export const logout = async () => {
   try {
     await signOut({
-      redirect: false, // Désactive la redirection
-    }) // Déconnexion via NextAuth
+      redirect: true,
+    })
 
     return response({
       success: true,

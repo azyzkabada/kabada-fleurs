@@ -18,68 +18,68 @@ import { z } from "zod"
 import { DEFAULT_LOGIN_REDIRECT } from "@/config/routes"
 
 export const login = async (payload: z.infer<typeof loginSchema>) => {
-  // Check if user input is not valid, then return an error.
+  // Vérifier si les champs saisis ne sont pas valides, retourner une erreur.
   const validatedFields = loginSchema.safeParse(payload)
   if (!validatedFields.success) {
     return response({
       success: false,
       error: {
         code: 422,
-        message: "Invalid fields.",
+        message: "Champs invalides.",
       },
     })
   }
 
   const { email, password } = validatedFields.data
 
-  // Check if user, email and password doesn't exist, then return an error.
+  // Vérifier si l'utilisateur, l'email ou le mot de passe n'existe pas, retourner une erreur.
   const existingUser = await getUserByEmail(email)
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return response({
       success: false,
       error: {
         code: 401,
-        message: "Invalid credentials.",
+        message: "Identifiants invalides.",
       },
     })
   }
 
-  // Check if passwords doesn't matches, then return an error.
+  // Vérifier si les mots de passe ne correspondent pas, retourner une erreur.
   const isPasswordMatch = await bcrypt.compare(password, existingUser.password)
   if (!isPasswordMatch) {
     return response({
       success: false,
       error: {
         code: 401,
-        message: "Invalid credentials.",
+        message: "Identifiants invalides.",
       },
     })
   }
 
-  // Check if user email isn't verified yet, then return an error.
+  // Vérifier si l'email de l'utilisateur n'est pas encore vérifié, retourner une erreur.
   // if (!existingUser.emailVerified) {
-  //     return response({
-  //         success: false,
-  //         error: {
-  //             code: 401,
-  //             message:
-  //                 'Your email address is not verified yet. Please check your email.',
-  //         },
-  //     })
+  //   return response({
+  //     success: false,
+  //     error: {
+  //       code: 401,
+  //       message:
+  //         "Votre adresse email n'est pas encore vérifiée. Veuillez vérifier vos emails.",
+  //     },
+  //   })
   // }
 
-  // Check if user's 2FA are enabled
+  // Vérifier si l'utilisateur a activé l'authentification à deux facteurs.
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
     const existingTwoFactorConfirmation =
       await getTwoFactorConfirmationByUserId(existingUser.id)
     const hasExpired = isExpired(existingTwoFactorConfirmation?.expires!)
 
-    // If two factor confirmation exist and expired, then delete it.
+    // Si la confirmation à deux facteurs existe mais est expirée, la supprimer.
     if (existingTwoFactorConfirmation && hasExpired) {
       await deleteTwoFactorConfirmationById(existingTwoFactorConfirmation.id)
     }
 
-    // If two factor confirmation doesn't exist or if two factor confirmation has expired, then handle 2fa
+    // Si la confirmation à deux facteurs n'existe pas ou est expirée, gérer l'envoi du code.
     if (!existingTwoFactorConfirmation || hasExpired) {
       const cookieStore = cookies()
       const token = signJwt(validatedFields.data)
@@ -91,16 +91,17 @@ export const login = async (payload: z.infer<typeof loginSchema>) => {
       return response({
         success: true,
         code: 200,
-        message: "Please confirm your two-factor authentication code.",
+        message:
+          "Veuillez confirmer votre code d'authentification à deux facteurs.",
       })
     }
   }
 
-  // Then try to sign in with next-auth credentials.
+  // Essayer de se connecter avec les identifiants.
   return await signInCredentials(email, password)
 }
 
-// Sign in credentials from next-auth
+// Connexion avec les identifiants via next-auth
 export const signInCredentials = async (email: string, password: string) => {
   try {
     await signIn("credentials", {
@@ -117,7 +118,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 401,
               type: "REQUIRED",
-              message: "Invalid credentials.",
+              message: "Identifiants invalides.",
             },
           })
 
@@ -128,7 +129,7 @@ export const signInCredentials = async (email: string, password: string) => {
               code: 403,
               type: "NOT_AVAILABLE",
               message:
-                "Another account already registered with the same Email Address. Please login with a different one.",
+                "Un autre compte est déjà enregistré avec cette adresse email. Veuillez vous connecter avec un compte différent.",
             },
           })
 
@@ -138,7 +139,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 422,
               type: "EXPIRED",
-              message: "Verification failed. Please try again.",
+              message: "Échec de la vérification. Veuillez réessayer.",
             },
           })
 
@@ -148,7 +149,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 422,
               type: "AUTHORIZED_CALLBACK_ERROR",
-              message: "Authorization callback error. Please try again.",
+              message: "Erreur de rappel d'autorisation. Veuillez réessayer.",
             },
           })
 
@@ -158,7 +159,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 422,
               type: "AUTHORIZED_CALLBACK_ERROR",
-              message: "Authorization callback error. Please try again.",
+              message: "Erreur de rappel d'autorisation. Veuillez réessayer.",
             },
           })
 
@@ -168,7 +169,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 422,
               type: "AUTHORIZED_CALLBACK_ERROR",
-              message: "Authorization callback error. Please try again.",
+              message: "Erreur de rappel d'autorisation. Veuillez réessayer.",
             },
           })
 
@@ -179,7 +180,7 @@ export const signInCredentials = async (email: string, password: string) => {
             error: {
               code: 500,
               type: "NOT_AVAILABLE",
-              message: "Something went wrong.",
+              message: "Une erreur est survenue.",
             },
           })
       }

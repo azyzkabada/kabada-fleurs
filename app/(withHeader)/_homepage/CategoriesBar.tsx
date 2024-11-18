@@ -65,7 +65,7 @@ export default function CategoriesBar() {
     <div className="hidden border-b bg-background md:flex">
       <div className="container flex items-center justify-center max-w-screen-xl px-4 mx-auto">
         {/* Desktop Navigation */}
-        <NavigationMenu className="flex items-center justify-center py-2">
+        <NavigationMenu className="z-20 flex items-center justify-center py-2">
           <NavigationMenuList className="flex items-center justify-center">
             {categories.map((category, index) => (
               <NavigationMenuItem key={index}>

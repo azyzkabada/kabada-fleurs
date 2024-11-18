@@ -2,7 +2,6 @@
 
 import { useTransition } from "react"
 import { resendToken } from "@/src/actions/resend"
-import { CardWrapper } from "@/src/components/auth/card-wrapper"
 import { FormInput } from "@/src/components/auth/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
@@ -11,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+
+import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
 
 export const ResendForm = () => {
   const [isPending, startTransition] = useTransition()

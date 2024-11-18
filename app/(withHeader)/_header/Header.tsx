@@ -2,16 +2,16 @@
 
 import { useState } from "react"
 import Link from "next/link"
-// import { useRouter } from "next/navigation"
-import { logout } from "@/src/actions/logout"
+import { useRouter } from "next/navigation"
 // Import de la fonction logout
 import { Icons } from "@/src/components/icons"
-import { Button } from "@/src/components/ui/button"
+import { Button, buttonVariants } from "@/src/components/ui/button"
 import { ScrollArea } from "@/src/components/ui/scroll-area"
 import { cn } from "@/src/lib/cn-utils"
 import { Menu, Search, ShoppingBag, User, X } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
+import ProfileDropDown from "@/app/(withHeader)/_header/ProfileDropdown"
 
 const navigationItems = [
   { label: "Home", href: "/" },
@@ -20,26 +20,29 @@ const navigationItems = [
   { label: "Inbox", href: "/inbox" },
   { label: "Settings", href: "/settings" },
 ]
-
-export default async function Header({ user }) {
+// Définition de l'interface utilisateur
+interface User {
+  name: string
+  email: string
+  image: string | null
+  id: string
+  role: string
+  isTwoFactorEnabled: boolean
+  isOAuth: boolean
+}
+interface HeaderProps {
+  user: User | null | undefined // `null` si l'utilisateur n'est pas connecté
+}
+export default function Header({ user }: HeaderProps) {
   const [isSidebarOpen, setSidebarOpen] = useState(false)
-  // const router = useRouter()
+  const router = useRouter()
   const toggleSidebar = () => setSidebarOpen((prev) => !prev)
   const closeSidebar = () => setSidebarOpen(false)
   console.log(user)
-  const handleLogout = async () => {
-    const result = await logout()
-    console.log("------------------", result, "------------------")
-    if (result.success) {
-      // router.refresh()
-      window.location.href = "/"
-    }
-  }
-
   return (
     <>
       {/* Header */}
-      <header className="sticky top-0 w-full border-b z-2 bg-background/60 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 w-full border-b bg-background/60 backdrop-blur-sm">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             {/* Bouton pour ouvrir la Sidebar */}
@@ -52,7 +55,7 @@ export default async function Header({ user }) {
               <Menu className="size-6" />
             </Button>
             <Link
-              href="/modals/logout"
+              href="/"
               className="flex items-center space-x-2 text-foreground"
             >
               <Icons.logo className="size-10 text-primary" aria-hidden="true" />
@@ -67,54 +70,38 @@ export default async function Header({ user }) {
             </Link>
           </div>
           <nav>
-            <ul className="flex items-center space-x-4">
+            <ul className="flex items-center space-x-5">
               <li>
                 <Button variant="ghost" size="icon" aria-label="Search">
                   <Search className="size-6" />
                 </Button>
               </li>
+              <li>
+                <Link
+                  href={"/shop/cart"}
+                  className={cn(
+                    buttonVariants({ size: "icon", variant: "ghost" }),
+                    "size-6"
+                  )}
+                  aria-label="Shopping cart"
+                >
+                  <ShoppingBag className="size-6" />
+                </Link>
+              </li>
               {user ? (
                 <>
                   {/* User Info */}
-                  <li>
-                    <Link
-                      href="/profile"
-                      className="flex items-center space-x-2"
-                      aria-label="User profile"
-                    >
-                      {user.image ? (
-                        <img
-                          src={user.image}
-                          alt="User profile"
-                          className="w-8 h-8 rounded-full"
-                        />
-                      ) : (
-                        <User className="size-6" />
-                      )}
-                      <span className="text-sm font-medium">{user.name}</span>
-                    </Link>
-                  </li>
-                  {/* Logout */}
-                  <li>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleLogout}
-                      className="ml-4"
-                    >
-                      Log out
-                    </Button>
-                  </li>
+
+                  <ProfileDropDown user={user} />
                 </>
               ) : (
                 <>
                   {/* Lien de Connexion */}
                   <li>
                     <Link
-                      href="/connexion"
+                      href="/login"
                       className={cn(
-                        "size-6",
-                        'buttonVariants({ size: "icon", variant: "ghost" })'
+                        buttonVariants({ size: "icon", variant: "ghost" })
                       )}
                       aria-label="User profile"
                     >
@@ -123,11 +110,6 @@ export default async function Header({ user }) {
                   </li>
                 </>
               )}
-              <li>
-                <Button variant="ghost" size="icon" aria-label="Shopping cart">
-                  <ShoppingBag className="size-6" />
-                </Button>
-              </li>
             </ul>
           </nav>
         </div>

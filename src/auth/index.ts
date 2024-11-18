@@ -44,6 +44,7 @@ export const {
       token.email = existingUser.email
       token.role = existingUser.role
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
+      token.emailVerified = !!existingUser?.emailVerified
       token.isOAuth = !!existingAccount
 
       return token
@@ -58,10 +59,14 @@ export const {
       }
 
       if (session.user) {
+        // console.log(token)
         session.user.name = token.name
         session.user.email = token.email as string
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
         session.user.isOAuth = token.isOAuth as boolean
+        session.user.emailVerified = token.emailVerified as
+          | (Date & false)
+          | (Date & true)
       }
 
       return session

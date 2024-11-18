@@ -1,20 +1,20 @@
-import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { Icons } from "@/src/components/icons"
 import { buttonVariants } from "@/src/components/ui/button"
 import { cn } from "@/src/lib/cn-utils"
 
 import { siteConfig } from "@/config/site"
 
-import { UserAuthForm } from "./_components/user-auth-form"
+import { RegisterForm } from "../_components/register-form"
 
-export const metadata: Metadata = {
-  title: "Authentification",
-  description: "Formulaires d'authentification conçus à l'aide des composants.",
-}
-
-export default function AuthenticationPage() {
+export default function RegisterPage({
+  searchParams,
+}: {
+  searchParams: { error: string }
+}) {
+  if (searchParams.error) redirect(`/error?message=${searchParams.error}`)
   return (
     <>
       <div className="container relative flex flex-col items-center justify-center h-screen lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -92,21 +92,12 @@ export default function AuthenticationPage() {
           </div>
         </div>
 
-        {/* Formulaire d'authentification */}
+        {/* Formulaire d'inscription */}
         <div className="flex items-center justify-center lg:p-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Créez un compte
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Saisissez votre adresse e-mail ci-dessous pour créer votre
-                compte.
-              </p>
-            </div>
-            <UserAuthForm />
+          <div className="flex flex-col justify-center w-full max-w-md mx-auto space-y-6">
+            <RegisterForm />
             <p className="px-8 text-sm text-center text-muted-foreground">
-              En cliquant sur continuer, vous acceptez nos{" "}
+              En vous inscrivant, vous acceptez nos{" "}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"

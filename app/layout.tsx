@@ -1,6 +1,7 @@
 import { Metadata, type Viewport } from "next"
 import { TailwindIndicator } from "@/src/components/tailwind-indicator"
 import { ThemeProvider } from "@/src/components/theme-provider"
+import { Toaster } from "@/src/components/ui/sonner"
 import { cn } from "@/src/lib/cn-utils"
 import { fontSans, fontSpecial } from "@/src/lib/fonts"
 import NextTopLoader from "nextjs-toploader"
@@ -40,14 +41,9 @@ interface RootLayoutProps {
 
 export default async function RootLayout({
   children,
-  searchParams,
-  params,
+
   modal,
 }: RootLayoutProps) {
-  const show = searchParams?.show
-  console.log(searchParams, "search")
-  console.log(params, "para")
-  // console.log(session)
   return (
     <>
       <html lang="fr" suppressHydrationWarning>
@@ -72,8 +68,9 @@ export default async function RootLayout({
             zIndex={1600}
             showAtBottom={false}
           />
+          <Toaster position="bottom-left" richColors theme="light" />
           <ThemeProvider attribute="class" defaultTheme="light">
-            {/* {modal} */}
+            {modal}
             <NuqsAdapter> {children}</NuqsAdapter>
 
             <TailwindIndicator />

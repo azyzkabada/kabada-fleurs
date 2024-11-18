@@ -59,7 +59,7 @@ const products = [
 
 export default function Product() {
   return (
-    <div className="">
+    <div className="container">
       <div className="px-4 py-16 mx-auto ">
         <h2 className="text-2xl font-bold tracking-tight">Top des Ventes</h2>
 

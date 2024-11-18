@@ -3,7 +3,6 @@
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { register } from "@/src/actions/register"
-import { CardWrapper } from "@/src/components/auth/card-wrapper"
 import { FormInput } from "@/src/components/auth/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
@@ -13,6 +12,9 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
+import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
+
+// Traduction du formulaire d'enregistrement
 export const RegisterForm = () => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -39,41 +41,45 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
-      headerTitle="Register"
-      headerDescription="Register your account by filling out the form below, make sure the data you enter is correct."
-      backButtonLabel="Already have an account? Login"
+      headerTitle="S'enregistrer"
+      headerDescription="Créez votre compte en remplissant le formulaire ci-dessous. Assurez-vous que les informations saisies sont correctes."
+      backButtonLabel="Vous avez déjà un compte ? Connectez-vous"
       backButtonHref="/login"
+      className="justify-center w-full"
     >
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="justify-center w-full space-y-6"
+        >
           <div className="space-y-4">
             <FormInput
               control={form.control}
               name="name"
-              label="Name"
+              label="Nom"
               type="text"
-              placeholder="e.g. John Doe"
+              placeholder="ex : Jean Dupont"
               isPending={isPending}
             />
             <FormInput
               control={form.control}
               name="email"
-              label="Email Address"
+              label="Adresse email"
               type="email"
-              placeholder="e.g. johndoe@example.com"
+              placeholder="ex : jeandupont@example.com"
               isPending={isPending}
             />
             <FormInput
               control={form.control}
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               placeholder="******"
               isPending={isPending}
             />
           </div>
           <Button type="submit" disabled={isPending} className="w-full">
-            Create an account
+            Créer un compte
           </Button>
         </form>
       </Form>

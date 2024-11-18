@@ -4,15 +4,18 @@ import { useTransition } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { login } from "@/src/actions/login"
-import { CardWrapper } from "@/src/components/auth/card-wrapper"
 import { FormInput } from "@/src/components/auth/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
+import { Separator } from "@/src/components/ui/separator"
 import { loginSchema } from "@/src/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+
+import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
+import { Social } from "@/app/(withoutHeader)/(auth-pages)/_components/social"
 
 export const LoginForm = () => {
   const router = useRouter()
@@ -83,6 +86,13 @@ export const LoginForm = () => {
           </Button>
         </form>
       </Form>
+      {/* Connexion via réseaux sociaux */}
+      <div className="relative flex flex-row items-center justify-center my-4 space-x-4 text-xs ">
+        <Separator className="flex-grow" />
+        <p className="text-xs text-center">Ou avec vos coordonnées</p>
+        <Separator className="flex-grow" />
+      </div>
+      <Social />
     </CardWrapper>
   )
 }
