@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/src/components/ui/sidebar"
+import ToggleTexte from "@/src/components/utils/hiddenTexte"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Bell, Home, Navigation, Palette, UserRound } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -151,8 +152,12 @@ export default function SettingsDialog({ user }: SettingsDialogProps) {
                   <UserRound className="w-12 h-12" />
                 </AvatarFallback>
               </Avatar>
-              <h1 className="mt-4 text-2xl font-bold">{user.name}</h1>
-              <p className="text-muted-foreground">{user.email}</p>
+              <h1 className="mt-4 space-y-2 text-2xl font-bold">{user.name}</h1>
+              {/* <Separator /> */}
+              <div className="flex items-center justify-center gap-4 text-xs">
+                ID Client :
+                <ToggleTexte className="text-xs" texte={user.id} />
+              </div>
             </div>
 
             <Form {...form}>
@@ -162,22 +167,22 @@ export default function SettingsDialog({ user }: SettingsDialogProps) {
                     className="w-full"
                     control={form.control}
                     name="name"
-                    label="Nom"
+                    label="Nom et prénom"
                     type="text"
                     placeholder="ex : John Doe"
                     isPending={isPending}
                   />
-
+                  <FormInput
+                    control={form.control}
+                    disabled
+                    name="email"
+                    label="Adresse e-mail"
+                    type="email"
+                    placeholder="ex : johndoe@example.com"
+                    isPending={isPending}
+                  />
                   {!user.isOAuth && (
                     <>
-                      <FormInput
-                        control={form.control}
-                        name="email"
-                        label="Adresse e-mail"
-                        type="email"
-                        placeholder="ex : johndoe@example.com"
-                        isPending={isPending}
-                      />
                       <FormInput
                         control={form.control}
                         name="password"
