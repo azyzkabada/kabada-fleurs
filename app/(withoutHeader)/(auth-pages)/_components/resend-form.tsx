@@ -13,12 +13,18 @@ import { z } from "zod"
 
 import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
 
-export const ResendForm = () => {
+interface ResendFormProps {
+  email?: string
+}
+
+export const ResendForm = ({ email = "" }: ResendFormProps) => {
   const [isPending, startTransition] = useTransition()
+
+  // Initialiser le formulaire avec l'email par défaut
   const form = useForm<z.infer<typeof resendSchema>>({
     resolver: zodResolver(resendSchema),
     defaultValues: {
-      email: "",
+      email: email,
     },
   })
 
@@ -32,11 +38,12 @@ export const ResendForm = () => {
       })
     })
   })
+
   return (
     <CardWrapper
-      headerTitle="Resend Confirmation"
-      headerDescription="The verification link will expires after a hour. If you don't verify your email within a hour, you can request another email verification link."
-      backButtonLabel="Back to login"
+      headerTitle="Renvoyer la confirmation"
+      headerDescription="Le lien de vérification expirera après une heure. Si vous ne vérifiez pas votre email dans ce délai, vous pouvez demander un nouveau lien de vérification."
+      backButtonLabel="Retourner"
       backButtonHref="/login"
     >
       <Form {...form}>
@@ -44,13 +51,13 @@ export const ResendForm = () => {
           <FormInput
             control={form.control}
             name="email"
-            label="Email Address"
+            label="Adresse e-mail"
             type="email"
-            placeholder="e.g. johndoe@example.com"
+            placeholder="ex. johndoe@example.com"
             isPending={isPending}
           />
           <Button type="submit" disabled={isPending} className="w-full">
-            Resend
+            Renvoyer
           </Button>
         </form>
       </Form>

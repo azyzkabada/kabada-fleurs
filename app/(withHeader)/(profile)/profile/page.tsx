@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { currentUser } from "@/src/lib/auth"
 
-import Main from "../Main"
+import Main from "../_components/Main"
 
 export const metadata: Metadata = {
   title: "Profile",

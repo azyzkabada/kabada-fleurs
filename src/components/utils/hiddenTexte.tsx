@@ -19,7 +19,7 @@ export default function ToggleTexte({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <span className="">{isVisible ? texte : getMaskedText(texte)}</span>
+      <span>{isVisible ? texte : getMaskedText(texte)}</span>
       <Button
         variant="ghost"
         size="icon"

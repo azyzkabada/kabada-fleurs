@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Icons } from "@/src/components/icons"
@@ -54,12 +53,12 @@ export default async function LoginPage({
         {/* Sidebar avec l'image et la citation */}
         <div className="relative flex-col hidden h-full p-6 pl-8 text-white lg:flex dark:border-r">
           <div className="absolute inset-0">
-            <Image
+            <img
               src="/authBanner2.jpg"
               alt="Fleuriste Étoilé background"
-              layout="fill"
-              objectFit="cover"
-              priority
+              // layout="fill"
+              // objectFit="cover"
+              // priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent to-80%"></div>
           </div>

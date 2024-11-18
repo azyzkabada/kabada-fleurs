@@ -38,7 +38,8 @@ export const RegisterForm = () => {
       register(values).then((data) => {
         if (data.success) {
           toast.success("Votre compte a été créé avec succès !")
-          router.push("/login")
+          // Ajout de l'e-mail comme paramètre dans la redirection
+          router.push(`/email-sent?email=${encodeURIComponent(values.email)}`)
         } else {
           toast.error(`Erreur : ${data.error.message}`)
         }

@@ -10,9 +10,9 @@ interface LayoutProps {
 
 const Layout: NextPage<LayoutProps> = ({ children, params, modal }) => {
   return (
-    <div className="relative flex flex-col min-h-screen">
+    <div className="relative flex flex-col min-h-screen ">
       {/* {modal} */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 ">{children}</main>
     </div>
   )
 }

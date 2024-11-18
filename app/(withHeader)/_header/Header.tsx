@@ -38,7 +38,7 @@ export default function Header({ user }: HeaderProps) {
   const router = useRouter()
   const toggleSidebar = () => setSidebarOpen((prev) => !prev)
   const closeSidebar = () => setSidebarOpen(false)
-  console.log(user)
+  // console.log(user)
   return (
     <>
       {/* Header */}

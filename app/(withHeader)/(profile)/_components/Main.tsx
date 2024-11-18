@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { profile } from "@/src/actions/profile"
 import { FormInput } from "@/src/components/auth/form-input"
 import { FormToggle } from "@/src/components/auth/form-toggle"
@@ -27,7 +28,15 @@ import {
 } from "@/src/components/ui/sidebar"
 import ToggleTexte from "@/src/components/utils/hiddenTexte"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Bell, Home, Navigation, Palette, UserRound } from "lucide-react"
+import {
+  BadgeCheck,
+  Bell,
+  Home,
+  Navigation,
+  Palette,
+  UserRound,
+  XCircle,
+} from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -55,6 +64,7 @@ interface User {
   role: "User" | "Admin"
   isTwoFactorEnabled: boolean
   isOAuth: boolean
+  emailVerified: boolean
 }
 
 // Props pour le composant de dialogue des paramètres
@@ -71,7 +81,7 @@ const navItems = [
 
 export default function SettingsDialog({ user }: SettingsDialogProps) {
   const [isPending, startTransition] = useTransition()
-
+  const router = useRouter()
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     mode: "onChange",
@@ -152,12 +162,58 @@ export default function SettingsDialog({ user }: SettingsDialogProps) {
                   <UserRound className="w-12 h-12" />
                 </AvatarFallback>
               </Avatar>
-              <h1 className="mt-4 space-y-2 text-2xl font-bold">{user.name}</h1>
-              {/* <Separator /> */}
-              <div className="flex items-center justify-center gap-4 text-xs">
+              <h1 className="mt-4 text-2xl font-bold">{user.name}</h1>
+              <div className="flex items-center justify-center gap-4 mt-2 text-xs">
                 ID Client :
                 <ToggleTexte className="text-xs" texte={user.id} />
               </div>
+              <div className="flex items-center justify-center gap-2 mt-2 text-sm">
+                <span>{user.email}</span>
+                {user.emailVerified ? (
+                  <span className="flex items-center px-2 py-1 text-green-700 bg-green-200 ">
+                    <BadgeCheck className="w-4 h-4 mr-1" />
+                    Vérifié
+                  </span>
+                ) : (
+                  <div className="flex flex-col">
+                    {" "}
+                    <div
+                      className="flex items-center px-2 py-1 text-red-700 bg-red-200 cursor-pointer hover:bg-red-300 hover:text-red-600"
+                      onClick={() =>
+                        router.push(
+                          `/resend-email?email=${encodeURIComponent(
+                            user.email as string
+                          )}`
+                        )
+                      }
+                    >
+                      <XCircle className="w-4 h-4 mr-1" />
+                      Non vérifié
+                    </div>
+                  </div>
+                )}
+              </div>
+              {!user.emailVerified && (
+                <div className="w-full p-4 mt-4 border border-gray-300 bg-gray-50 ">
+                  <p className="font-sans text-xs font-normal">
+                    Votre adresse e-mail n'est pas encore vérifiée. Pour assurer
+                    la sécurité de votre compte, <br />
+                    <span
+                      className="font-bold underline cursor-pointer hover:text-primary"
+                      role="button"
+                      onClick={() =>
+                        router.push(
+                          `/resend-email?email=${encodeURIComponent(
+                            user.email as string
+                          )}`
+                        )
+                      }
+                    >
+                      Veuillez la vérifier maintenant.
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
 
             <Form {...form}>

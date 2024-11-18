@@ -1,14 +1,18 @@
-export const publicRoutes: string[] = ["/verify", "/", "/s", "/connexion"]
+export const publicRoutes: string[] = [
+  "/",
+  "/resend-email",
+  "/verify",
+  "/error",
+  "/testemail",
+]
 
 export const authRoutes: string[] = [
   "/login",
   "/register",
-  "/error",
-  "/resend",
+  "/email-sent",
   "/reset",
   "/new-password",
   "/two-factor",
-  "/testemail",
 ]
 
 export const apiAuthPrefix: string = "/api/auth"

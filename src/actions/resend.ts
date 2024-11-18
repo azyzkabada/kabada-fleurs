@@ -26,6 +26,7 @@ export const resendToken = async (payload: z.infer<typeof resendSchema>) => {
 
   // Check if token doesn't exist, then return an error.
   const existingToken = await getVerificationTokenByEmail(email)
+
   if (!existingToken) {
     return response({
       success: false,
