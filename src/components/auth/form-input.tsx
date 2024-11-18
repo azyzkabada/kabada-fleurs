@@ -13,7 +13,7 @@ type FormInputProps<T extends FieldValues> =
   React.ComponentPropsWithRef<"input"> & {
     control: Control<T>
     name: Path<T>
-    label: string
+    label: string | React.ReactNode
     isPending?: boolean
   }
 

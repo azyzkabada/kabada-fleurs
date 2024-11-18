@@ -115,6 +115,7 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-animate"),
+    require("tailwind-animatecss"),
     require("tailwindcss-aspect-ratio"),
   ],
 }

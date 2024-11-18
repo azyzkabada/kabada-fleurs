@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Renvoyer la confirmation",
 }
 
-export default function ResendPage({
+export default function ResendEmailPage({
   searchParams,
 }: {
   searchParams: { email?: string }

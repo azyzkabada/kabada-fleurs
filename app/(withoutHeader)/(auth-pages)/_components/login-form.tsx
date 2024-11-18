@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { login } from "@/src/actions/login"
 import { FormInput } from "@/src/components/auth/form-input"
@@ -80,7 +81,17 @@ export const LoginForm = () => {
             <FormInput
               control={form.control}
               name="password"
-              label="Mot de passe"
+              label={
+                <div className="flex items-center justify-between">
+                  <span>Mot de passe</span>
+                  <Link
+                    href="/reset"
+                    className="text-xs text-primary hover:underline"
+                  >
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              }
               type="password"
               placeholder="******"
               isPending={isPending}
