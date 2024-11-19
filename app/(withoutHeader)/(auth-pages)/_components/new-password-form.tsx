@@ -2,31 +2,37 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { resetPassword } from "@/src/actions/reset-password"
-import { FormInput } from "@/src/components/auth/form-input"
+import { newPassword } from "@/src/actions/new-password"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
-import { resetPasswordSchema } from "@/src/schemas"
+import { newPasswordSchema } from "@/src/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LockKeyhole } from "lucide-react"
+import { KeyRound } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-export const ResetForm = () => {
+import { FormInput } from "../_components/form-input"
+
+type NewPasswordFormProps = {
+  token: string
+}
+
+export const NewPasswordForm = ({ token }: NewPasswordFormProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof resetPasswordSchema>>({
-    resolver: zodResolver(resetPasswordSchema),
+  const form = useForm<z.infer<typeof newPasswordSchema>>({
+    resolver: zodResolver(newPasswordSchema),
     defaultValues: {
-      email: "",
+      password: "",
+      confirmPassword: "",
     },
   })
 
   const handleSubmit = form.handleSubmit((values) => {
     startTransition(() => {
-      resetPassword(values).then((data) => {
+      newPassword(values, token).then((data) => {
         if (data.success) {
           router.push("/login")
           return toast.success(data.message)
@@ -40,12 +46,14 @@ export const ResetForm = () => {
     <div className="flex items-center justify-center w-full h-screen px-4 py-12 bg-background">
       <div className="flex flex-col items-center justify-center w-full max-w-md gap-6 p-20 px-4 md:border sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center gap-4">
-          <LockKeyhole className="w-32 h-32 text-primary animatecss animatecss-rubberBand animatecss-infinite" />
+          <KeyRound className="w-32 h-32 text-primary animatecss animatecss-rubberBand animatecss-infinite" />
           <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-bold">Mot de passe oublié</h2>
+            <h2 className="text-2xl font-bold">
+              Réinitialiser le mot de passe
+            </h2>
             <p className="text-muted-foreground">
-              Veuillez entrer votre adresse e-mail. Vous recevrez un message
-              avec des instructions pour réinitialiser votre mot de passe.
+              Entrez un nouveau mot de passe ci-dessous pour réinitialiser votre
+              mot de passe.
             </p>
           </div>
         </div>
@@ -53,14 +61,22 @@ export const ResetForm = () => {
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             <FormInput
               control={form.control}
-              name="email"
-              label="Adresse e-mail"
-              type="email"
-              placeholder="ex. foulen@benfalten.com"
+              name="password"
+              label="Nouveau mot de passe"
+              type="password"
+              placeholder="******"
+              isPending={isPending}
+            />
+            <FormInput
+              control={form.control}
+              name="confirmPassword"
+              label="Confirmer le mot de passe"
+              type="password"
+              placeholder="******"
               isPending={isPending}
             />
             <Button type="submit" disabled={isPending} className="w-full">
-              Envoyer le lien de réinitialisation
+              Réinitialiser le mot de passe
             </Button>
           </form>
         </Form>

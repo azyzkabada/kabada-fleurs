@@ -4,7 +4,6 @@ import { useTransition } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { login } from "@/src/actions/login"
-import { FormInput } from "@/src/components/auth/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
 import { Separator } from "@/src/components/ui/separator"
@@ -15,7 +14,8 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
-import { Social } from "@/app/(withoutHeader)/(auth-pages)/_components/social"
+import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
+import { Social } from "@/app/(withoutHeader)/(auth-pages)/_components/social-buttons"
 
 export const LoginForm = () => {
   const router = useRouter()
@@ -77,7 +77,7 @@ export const LoginForm = () => {
                 className="justify-end w-full p-0 -mt-6 text-xs text-blue-500"
                 asChild
               >
-                <Link href="/reset">Forgot password?</Link>
+                <Link href="/reset-password">Forgot password?</Link>
               </Button>
             </div>
           </div>

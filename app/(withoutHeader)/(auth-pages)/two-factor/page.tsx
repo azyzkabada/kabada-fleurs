@@ -1,11 +1,12 @@
 import { Metadata } from "next"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { TwoFactorForm } from "@/src/components/form/two-factor-form"
 import { verifyJwtToken } from "@/src/lib/utils"
 import { loginSchema } from "@/src/schemas"
 import { getTwoFactorTokenByEmail } from "@/src/services/two-factor-token"
 import { z } from "zod"
+
+import { TwoFactorForm } from "@/app/(withoutHeader)/(auth-pages)/_components/two-factor-form"
 
 export const metadata: Metadata = {
   title: "Two-Factor Authentication",

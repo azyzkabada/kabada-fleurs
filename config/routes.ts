@@ -10,7 +10,7 @@ export const authRoutes: string[] = [
   "/login",
   "/register",
   "/email-sent",
-  "/reset",
+  "/reset-password",
   "/new-password",
   "/two-factor",
 ]
