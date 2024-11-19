@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import Link from "next/link"
 import { profile } from "@/src/actions/profile"
 import { FormToggle } from "@/src/components/auth/form-toggle"
+import { FormInput } from "@/src/components/form-input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
 import { Button } from "@/src/components/ui/button"
 import {
@@ -23,7 +24,6 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { ExtendedUser } from "@/types/next-auth"
-import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
 
 type ComponentProps = {
   user: ExtendedUser

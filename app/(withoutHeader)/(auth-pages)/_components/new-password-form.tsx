@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { FormInput } from "../_components/form-input"
+import { FormInput } from "../../../../src/components/form-input"
 
 type NewPasswordFormProps = {
   token: string

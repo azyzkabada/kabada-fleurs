@@ -3,6 +3,7 @@
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { register } from "@/src/actions/register"
+import { FormInput } from "@/src/components/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
 import { Separator } from "@/src/components/ui/separator"
@@ -13,7 +14,6 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
-import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
 
 import { Social } from "./social-buttons"
 

@@ -3,6 +3,7 @@
 import { useTransition } from "react"
 import Link from "next/link"
 import { resendToken } from "@/src/actions/resend"
+import { FormInput } from "@/src/components/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
 import { resendSchema } from "@/src/schemas"
@@ -11,8 +12,6 @@ import { Mails } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-
-import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
 
 interface ResendFormProps {
   email?: string

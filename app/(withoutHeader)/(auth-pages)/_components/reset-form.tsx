@@ -3,6 +3,7 @@
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { resetPassword } from "@/src/actions/reset-password"
+import { FormInput } from "@/src/components/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
 import { resetPasswordSchema } from "@/src/schemas"
@@ -11,8 +12,6 @@ import { LockKeyhole } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-
-import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
 
 export const ResetForm = () => {
   const router = useRouter()

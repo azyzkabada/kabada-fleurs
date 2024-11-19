@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { login } from "@/src/actions/login"
+import { FormInput } from "@/src/components/form-input"
 import { Button } from "@/src/components/ui/button"
 import { Form } from "@/src/components/ui/form"
 import { Separator } from "@/src/components/ui/separator"
@@ -14,7 +15,6 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { CardWrapper } from "@/app/(withoutHeader)/(auth-pages)/_components/card-wrapper"
-import { FormInput } from "@/app/(withoutHeader)/(auth-pages)/_components/form-input"
 
 import { Social } from "./social-buttons"
 
